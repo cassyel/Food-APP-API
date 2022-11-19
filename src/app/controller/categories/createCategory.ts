@@ -15,7 +15,7 @@ const options: ValidationOptions = {
   },
 };
 
-export async function createCategory(req: Request, res: Response) {
+export async function createCategoryController(req: Request, res: Response) {
   const { error } = schema.validate(req.body, options);
   if (error) return res.status(400).json({ error: error.message });
 
