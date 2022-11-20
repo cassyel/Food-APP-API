@@ -9,7 +9,7 @@ type ingredients = {
 export interface IProductProps {
   name: string;
   description: string;
-  imagePath: string;
+  imagePath: string | undefined;
   price: number;
   ingredients: ingredients[];
   category: ObjectId
