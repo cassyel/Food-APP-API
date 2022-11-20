@@ -1,9 +1,25 @@
+import path from 'node:path';
+
 import { Router } from 'express';
+import multer from 'multer';
+
 import { createCategoryController } from './app/controller/categories/createCategory';
 import { listCategoriesController } from './app/controller/categories/listCategory';
+import { createProductController } from './app/controller/products/createProduct';
 import { listProductsController } from './app/controller/products/listProducts';
 
 export const router = Router();
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, callback) {
+      callback(null, path.resolve(__dirname, '..', 'uploads'));
+    },
+    filename(req, file, callback) {
+      callback(null, `${Date.now()}-${file.originalname}`);
+    },
+  }),
+});
 
 // List Categories
 router.get('/categories', listCategoriesController);
@@ -15,9 +31,7 @@ router.post('/categories', createCategoryController);
 router.get('/products', listProductsController);
 
 // Create Product
-router.post('/products', (req, res) => {
-  res.send('OK');
-});
+router.post('/products',upload.single('image'), createProductController);
 
 // Get Products By Category
 router.get('/categories/:categoryId/products', (req, res) => {
