@@ -28,4 +28,4 @@ mongoose.connect('mongodb://localhost:27017/Waiter-APP', {
     app.use(serverError);
 
   })
-  .catch((error) => console.log('Error to connect on mongoDB'));
+  .catch(() => console.log('Error to connect on mongoDB'));

@@ -1,7 +1,7 @@
 import { createProductModel, findProductModel, IProductProps } from '../../models/products/createProduct';
 
 export async function createProductService({ name, description, imagePath, price, ingredients, category }:IProductProps) {
-  const existsProduct = await findProductModel({ name });
+  const existsProduct = await findProductModel({ name, description });
 
   if (existsProduct) return { content: { error: 'Product already exists' }, code: 400 };
 

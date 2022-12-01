@@ -11,7 +11,7 @@ export interface IProductProps {
   description: string;
   imagePath: string | undefined;
   price: number;
-  ingredients: ingredients[];
+  ingredients: ingredients[] | [];
   category: ObjectId
 }
 
@@ -20,7 +20,7 @@ export async function createProductModel({ name, description, imagePath, price, 
   return newProduct;
 }
 
-export async function findProductModel({ name }: { name: string }) {
-  const product = await Product.findOne({ name });
+export async function findProductModel({ name, description }: { name: string; description: string }) {
+  const product = await Product.findOne({ name, description });
   return product;
 }

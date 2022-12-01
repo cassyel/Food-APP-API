@@ -31,7 +31,7 @@ export async function createProductController(req: Request, res: Response) {
     description,
     imagePath,
     price: Number(price),
-    ingredients: JSON.parse(ingredients),
+    ingredients: JSON.parse(ingredients) || [],
     category,
   });
 
