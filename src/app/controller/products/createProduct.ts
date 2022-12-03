@@ -7,7 +7,7 @@ const schema = Joi.object({
   description: Joi.string().min(10).required(),
   image: Joi.any().optional(),
   price: Joi.number().min(1).required(),
-  ingredients: Joi.string().required(),
+  ingredients: Joi.string().optional(),
   category: Joi.string().required()
 });
 
@@ -31,7 +31,7 @@ export async function createProductController(req: Request, res: Response) {
     description,
     imagePath,
     price: Number(price),
-    ingredients: JSON.parse(ingredients) || [],
+    ingredients: ingredients ? JSON.parse(ingredients) : [],
     category,
   });
 
