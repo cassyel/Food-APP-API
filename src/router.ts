@@ -8,6 +8,7 @@ import { listCategoriesController } from './app/controller/categories/listCatego
 import { createProductController } from './app/controller/products/createProduct';
 import { listProductsController } from './app/controller/products/listProducts';
 import { listProductsByCategoryController } from './app/controller/products/listProductsByCategory';
+import { listOrdersController } from './app/controller/orders/listOrders';
 
 export const router = Router();
 
@@ -38,9 +39,7 @@ router.post('/products',upload.single('image'), createProductController);
 router.get('/categories/:categoryId/products', listProductsByCategoryController);
 
 // List Orders
-router.get('/orders', (req, res) => {
-  res.send('OK');
-});
+router.get('/orders', listOrdersController);
 
 // Create Order
 router.post('/orders', (req, res) => {
