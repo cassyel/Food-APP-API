@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { Request, Response } from 'express';
 import Joi, { ValidationOptions } from 'joi';
 import { createProductService } from '../../service/products/createProduct';
@@ -19,21 +20,33 @@ const options: ValidationOptions = {
   },
 };
 
-export async function createProductController(req: Request, res: Response) {
-  const { error } = schema.validate(req.body, options);
-  if (error) return res.status(400).json({ error: error.message });
+const deleteFailedRequestImage = (path: string) => {
+  fs.unlink(path, () => {
+    console.log(`Deleted ${path}`);
+  });
+};
 
-  const imagePath = req.file?.filename;
-  const { name, description, price, ingredients, category } = req.body;
+export async function createProductController(req: Request, res: Response) {
+  const { file, body } = req;
+  const { error: JoiInputFieldsError } = schema.validate(body, options);
+
+  if (JoiInputFieldsError) {
+    deleteFailedRequestImage(String(file?.path));
+    return res.status(400).json({ error: JoiInputFieldsError.message });
+  }
+
+  const { name, description, price, ingredients, category } = body;
 
   const { code, content } = await createProductService({
     name,
     description,
-    imagePath,
+    imagePath: file?.filename,
     price: Number(price),
     ingredients: ingredients ? JSON.parse(ingredients) : [],
     category,
   });
 
-  res.status(code).json(content);
+  if (code !== 201) deleteFailedRequestImage(String(file?.path));
+
+  return res.status(code).json(content);
 }
