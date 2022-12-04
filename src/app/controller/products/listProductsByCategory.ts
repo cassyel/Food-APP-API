@@ -5,5 +5,5 @@ export async function listProductsByCategoryController(req: Request, res: Respon
   const { categoryId } = req.params;
   const { code, content } = await listProductsByCategoryService(categoryId);
 
-  res.status(code).json(content);
+  return res.status(code).json(content);
 }

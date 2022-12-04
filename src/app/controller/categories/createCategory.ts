@@ -22,5 +22,5 @@ export async function createCategoryController(req: Request, res: Response) {
   const { name, icon } = req.body;
   const { code, content } = await createCategoryService({ name, icon });
 
-  res.status(code).json(content);
+  return res.status(code).json(content);
 }
