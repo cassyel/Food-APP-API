@@ -9,6 +9,7 @@ import { createProductController } from './app/controller/products/createProduct
 import { listProductsController } from './app/controller/products/listProducts';
 import { listProductsByCategoryController } from './app/controller/products/listProductsByCategory';
 import { listOrdersController } from './app/controller/orders/listOrders';
+import { createOrderController } from './app/controller/orders/createOrder';
 
 export const router = Router();
 
@@ -42,9 +43,7 @@ router.get('/categories/:categoryId/products', listProductsByCategoryController)
 router.get('/orders', listOrdersController);
 
 // Create Order
-router.post('/orders', (req, res) => {
-  res.send('OK');
-});
+router.post('/orders', createOrderController);
 
 // Change Order Status
 router.patch('/orders/:orderId', (req, res) => {
