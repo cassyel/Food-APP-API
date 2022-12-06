@@ -1,11 +1,24 @@
 import { createOrderModel, findOrderModel, IOrderProps } from '../../models/orders/createOrder';
 
 export async function createOrderService({ table, products }: IOrderProps) {
-  const order = await findOrderModel({ table });
-  const existsOrder = order.filter(item => item.products.every((item, index) => String(item.product) === products[index].product && item.quantity === products[index].quantity));
+  const registeredOrders = await findOrderModel({ table });
 
+  const filteredOrders = registeredOrders.filter(
+    (order) => order.products.length === products.length
+  );
 
-  if (existsOrder.length > 0) return { content: { error: 'Order already exists' }, code: 400 };
+  if (filteredOrders.length > 0) {
+    const existingOrders = filteredOrders.filter((order) =>
+      order.products.every(
+        (item, index) =>
+          String(item.product) === products[index].product &&
+          item.quantity === products[index].quantity
+      )
+    );
+
+    if (existingOrders.length > 0)
+      return { content: 'Order already registered', code: 400 };
+  }
 
   const newOrder = await createOrderModel({ table, products });
 
