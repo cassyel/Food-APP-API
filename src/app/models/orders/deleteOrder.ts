@@ -5,6 +5,6 @@ export interface IDeleteOrderProps {
 }
 
 export async function deleteOrderModel({ id }: IDeleteOrderProps) {
-  const deletedOrder = await Order.findByIdAndDelete(id);
+  const deletedOrder = await Order.findByIdAndDelete(id).sort({ createdAt: -1 }).populate('products.product');
   return deletedOrder;
 }

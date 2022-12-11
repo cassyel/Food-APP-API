@@ -6,6 +6,6 @@ export interface IPropsChangeStatus {
 }
 
 export async function changeOrderStatusModel({ id, status }: IPropsChangeStatus) {
-  const changedOrder = await Order.findByIdAndUpdate(id, { status }, { new: true }).populate('products.product');
+  const changedOrder = await Order.findByIdAndUpdate(id, { status }, { new: true }).sort({ createdAt: -1 }).populate('products.product');
   return changedOrder;
 }
