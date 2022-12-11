@@ -1,6 +1,6 @@
-import { createOrderModel, findOrderModel, IOrderProps } from '../../models/orders/createOrder';
+import { createOrderModel, findOrderModel, ICreateOrderProps } from '../../models/orders/createOrder';
 
-export async function createOrderService({ table, products }: IOrderProps) {
+export async function createOrderService({ table, products }: ICreateOrderProps) {
   const registeredOrders = await findOrderModel({ table });
 
   const filteredOrders = registeredOrders.filter(

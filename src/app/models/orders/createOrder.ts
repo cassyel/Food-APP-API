@@ -5,17 +5,17 @@ type orderProduct = {
   quantity: number;
 }
 
-export interface IOrderProps {
+export interface ICreateOrderProps {
   table: string;
   products: orderProduct[];
 }
 
-export async function createOrderModel({ table, products }: IOrderProps) {
+export async function createOrderModel({ table, products }: ICreateOrderProps) {
   const newOrder = await Order.create({ table, products });
   return newOrder;
 }
 
-export async function findOrderModel({ table }: Partial<IOrderProps>) {
+export async function findOrderModel({ table }: Partial<ICreateOrderProps>) {
   const status = Order.schema.paths.status.options.default;
 
   const order = await Order.find({ table, status });
