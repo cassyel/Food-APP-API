@@ -11,6 +11,7 @@ import { listProductsByCategoryController } from './app/controller/products/list
 import { listOrdersController } from './app/controller/orders/listOrders';
 import { createOrderController } from './app/controller/orders/createOrder';
 import { changeOrderStatusController } from './app/controller/orders/changeOrderStatus';
+import { deleteOrderController } from './app/controller/orders/deleteOrder';
 
 export const router = Router();
 
@@ -50,6 +51,4 @@ router.post('/orders', createOrderController);
 router.patch('/orders/:orderId', changeOrderStatusController);
 
 // Delete / Cancel Order
-router.delete('/orders/:orderId', (req, res) => {
-  res.send('OK');
-});
+router.delete('/orders/:orderId', deleteOrderController);
