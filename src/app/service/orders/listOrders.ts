@@ -5,5 +5,5 @@ export async function listOrdersService() {
 
   return allOrders.length !== 0
     ? { content: allOrders, code: 200 }
-    : { content: { error: 'No products registered' }, code: 400 };
+    : { content: { error: 'No orders registered' }, code: 400 };
 }
