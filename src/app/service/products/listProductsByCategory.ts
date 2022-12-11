@@ -5,5 +5,5 @@ export async function listProductsByCategoryService(categoryId: string) {
 
   return allProductsByCategory.length !== 0
     ? { content: allProductsByCategory, code: 200 }
-    : { content: { error: 'No products registered' }, code: 400 };
+    : { content: { error: `Not find products with categoryId: ${categoryId}` }, code: 400 };
 }

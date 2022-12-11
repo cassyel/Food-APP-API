@@ -5,5 +5,5 @@ export async function changeOrderStatusService({ id, status }: IPropsChangeStatu
 
   return changedOrder
     ? { content: changedOrder, code: 200 }
-    : { content: { error: 'No orders changed' }, code: 400 };
+    : { content: { error: `Not find order with this id: ${id}` }, code: 400 };
 }
