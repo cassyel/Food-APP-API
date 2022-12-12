@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "prestart": "docker compose up",
+    "prestart": "docker compose up -d",
+    "predev": "docker compose up -d",
     "start": "node dist",
     "dev": "nodemon src/index.ts"
   },
