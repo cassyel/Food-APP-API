@@ -1,17 +1,19 @@
+import * as dotenv from 'dotenv';
+
 import path from 'node:path';
 import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
 import { serverError } from './errorHandling';
 
+dotenv.config();
 
 
-
-mongoose.connect('mongodb://localhost:27017/Waiter-APP', {
-  authSource: 'admin',
+mongoose.connect(String(process.env.DB_URL), {
+  authSource: process.env.DB_AUTH,
   auth: {
-    password: 'secret',
-    username: 'mongoadmin',
+    password: process.env.DB_PASSWORD,
+    username: process.env.DB_USER,
   },
 })
   .then(() => {
