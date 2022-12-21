@@ -8,14 +8,12 @@ import { serverError } from './errorHandling';
 
 dotenv.config();
 
+const MONGO_URL= `mongodb://${process.env.MONGOUSER}:${process.env.MONGOPASSWORD}@${process.env.MONGOHOST }:${process.env.MONGOPORT}`;
 
-mongoose.connect(String(process.env.DB_URL), {
-  authSource: process.env.DB_AUTH,
-  auth: {
-    password: process.env.DB_PASSWORD,
-    username: process.env.DB_USER,
-  },
-})
+console.log(MONGO_URL);
+
+
+mongoose.connect(String(MONGO_URL), { dbName: 'Waiter-APP' })
   .then(() => {
     const app = express();
     const port = 3001;
