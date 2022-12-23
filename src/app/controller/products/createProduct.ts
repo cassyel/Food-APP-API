@@ -20,7 +20,7 @@ const options: ValidationOptions = {
   },
 };
 
-const deleteFailedRequestImage = (path: string) => {
+export const deleteFailedRequestImage = (path: string) => {
   fs.unlink(path, () => {
     console.log(`Deleted ${path}`);
   });
