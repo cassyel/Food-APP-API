@@ -5,15 +5,16 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
 import { serverError } from './errorHandling';
+import { categoriesSeeder } from './app/seeder/Category';
 
 dotenv.config();
 
-const MONGO_URL= `mongodb://${process.env.MONGOUSER}:${process.env.MONGOPASSWORD}@${process.env.MONGOHOST }:${process.env.MONGOPORT}`;
+export const MONGO_URL = `mongodb://${process.env.MONGOUSER}:${process.env.MONGOPASSWORD}@${process.env.MONGOHOST}:${process.env.MONGOPORT}`;
 
 console.log(MONGO_URL);
 
-
-mongoose.connect(String(MONGO_URL), { dbName: 'Waiter-APP' })
+mongoose
+  .connect(String(MONGO_URL), { dbName: 'Waiter-APP' })
   .then(() => {
     const app = express();
     const port = 3001;
@@ -24,8 +25,11 @@ mongoose.connect(String(MONGO_URL), { dbName: 'Waiter-APP' })
 
     app.use(express.json());
     app.use(router);
-    app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
+    app.use(
+      '/uploads',
+      express.static(path.resolve(__dirname, '..', 'uploads'))
+    );
     app.use(serverError);
-
+    categoriesSeeder();
   })
   .catch(() => console.log('Error to connect on mongoDB'));

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "seed:categories": "npx ts-node ./src/app/seeder/Category.ts"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
