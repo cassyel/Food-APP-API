@@ -18,10 +18,10 @@ export const router = Router();
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination(req, file, callback) {
+    destination(_req, _file, callback) {
       callback(null, path.resolve(__dirname, '..', 'uploads'));
     },
-    filename(req, file, callback) {
+    filename(_req, file, callback) {
       callback(null, `${Date.now()}-${file.originalname}`);
     },
   }),
