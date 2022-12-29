@@ -13,6 +13,8 @@ import { createOrderController } from './app/controller/orders/createOrder';
 import { changeOrderStatusController } from './app/controller/orders/changeOrderStatus';
 import { deleteOrderController } from './app/controller/orders/deleteOrder';
 import { deleteProductController } from './app/controller/products/deleteProduct';
+import { loginController } from './app/controller/user/login';
+import { authMiddleware } from './authMiddleware';
 
 export const router = Router();
 
@@ -31,28 +33,31 @@ const upload = multer({
 router.get('/categories', listCategoriesController);
 
 // Create Category
-router.post('/categories', createCategoryController);
+router.post('/categories', authMiddleware, createCategoryController);
 
 // List Products
 router.get('/products', listProductsController);
 
 // Create Product
-router.post('/products',upload.single('image'), createProductController);
+router.post('/products',upload.single('image'), authMiddleware, createProductController);
 
 // Get Products By Category
 router.get('/categories/:categoryId/products', listProductsByCategoryController);
 
 // Delete Product
-router.delete('/products/:productId', deleteProductController);
+router.delete('/products/:productId', authMiddleware, deleteProductController);
 
 // List Orders
 router.get('/orders', listOrdersController);
 
 // Create Order
-router.post('/orders', createOrderController);
+router.post('/orders', authMiddleware, createOrderController);
 
 // Change Order Status
-router.patch('/orders/:orderId', changeOrderStatusController);
+router.patch('/orders/:orderId', authMiddleware, changeOrderStatusController);
 
 // Delete / Cancel Order
-router.delete('/orders/:orderId', deleteOrderController);
+router.delete('/orders/:orderId', authMiddleware, deleteOrderController);
+
+// Login
+router.post('/login', loginController);

@@ -17,7 +17,7 @@ mongoose
   .connect(String(MONGO_URL), { dbName: 'Waiter-APP' })
   .then(() => {
     const app = express();
-    const port = 3001;
+    const port = 3002;
 
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
@@ -25,10 +25,7 @@ mongoose
 
     app.use(express.json());
     app.use(router);
-    app.use(
-      '/uploads',
-      express.static(path.resolve(__dirname, '..', 'uploads'))
-    );
+    app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
     app.use(serverError);
     categoriesSeeder();
   })
