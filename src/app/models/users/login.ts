@@ -1,4 +1,5 @@
 import { User } from '../../database/User';
+import bcrypt from 'bcryptjs';
 
 export interface IUserProps {
   name: string;
@@ -6,7 +7,7 @@ export interface IUserProps {
   password: string;
 }
 
-export async function loginModel({ name, email }: Partial<IUserProps>) {
+export async function loginModel({ name, email, password }: Partial<IUserProps>) {
   const user = await User.findOne({ name, email });
-  return user;
+  return bcrypt.compareSync(String(password), String(user?.password)) ? user : null;
 }
