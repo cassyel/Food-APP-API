@@ -1,11 +1,14 @@
 import * as dotenv from 'dotenv';
 
+import swaggerUi from 'swagger-ui-express';
 import path from 'node:path';
 import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
 import { serverError } from './errorHandling';
 import { categoriesSeeder } from './app/seeder/Category';
+
+import swagerDocs from './openapi.json';
 
 dotenv.config();
 
@@ -19,6 +22,7 @@ mongoose
     const app = express();
     const port = 3002;
 
+
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
     });
@@ -26,6 +30,7 @@ mongoose
     app.use(express.json());
     app.use(router);
     app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swagerDocs));
     app.use(serverError);
     categoriesSeeder();
   })
