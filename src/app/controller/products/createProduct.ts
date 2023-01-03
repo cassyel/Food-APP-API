@@ -2,6 +2,7 @@ import fs from 'fs';
 import { Request, Response } from 'express';
 import Joi, { ValidationOptions } from 'joi';
 import { createProductService } from '../../service/products/createProduct';
+import { isValidObjectId } from 'mongoose';
 
 const schema = Joi.object({
   name: Joi.string().min(3).required(),
@@ -36,6 +37,8 @@ export async function createProductController(req: Request, res: Response) {
   }
 
   const { name, description, price, ingredients, category } = body;
+
+  if (!isValidObjectId(category)) return res.status(400).json({ error: 'Invalid orderId' });
 
   const { code, content } = await createProductService({
     name,
