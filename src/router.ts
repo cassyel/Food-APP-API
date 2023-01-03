@@ -39,7 +39,7 @@ router.post('/categories', authMiddleware, createCategoryController);
 router.get('/products', listProductsController);
 
 // Create Product
-router.post('/products',upload.single('image'), authMiddleware, createProductController);
+router.post('/products', authMiddleware, upload.single('image'), createProductController);
 
 // Get Products By Category
 router.get('/categories/:categoryId/products', listProductsByCategoryController);
