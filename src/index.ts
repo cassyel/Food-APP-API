@@ -29,7 +29,7 @@ mongoose
 
     app.use(express.json());
     app.use(router);
-    app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
+    app.use('/uploads/images', express.static(path.resolve(__dirname, '..', 'uploads')));
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swagerDocs));
     app.use(serverError);
     categoriesSeeder();
