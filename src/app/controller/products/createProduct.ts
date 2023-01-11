@@ -10,7 +10,7 @@ const schema = Joi.object({
   image: Joi.any().optional(),
   price: Joi.number().min(1).required(),
   ingredients: Joi.string().optional(),
-  category: Joi.string().required()
+  category: Joi.string().required(),
 });
 
 const options: ValidationOptions = {
@@ -28,28 +28,34 @@ export const deleteFailedRequestImage = (path: string) => {
 };
 
 export async function createProductController(req: Request, res: Response) {
-  const { file, body } = req;
-  const { error: JoiInputFieldsError } = schema.validate(body, options);
+  try {
+    const { file, body } = req;
+    const { error: JoiInputFieldsError } = schema.validate(body, options);
 
-  if (JoiInputFieldsError) {
-    deleteFailedRequestImage(String(file?.path));
-    return res.status(400).json({ error: JoiInputFieldsError.message });
+    if (JoiInputFieldsError) {
+      deleteFailedRequestImage(String(file?.path));
+      return res.status(400).json({ error: JoiInputFieldsError.message });
+    }
+
+    const { name, description, price, ingredients, category } = body;
+
+    if (!isValidObjectId(category))
+      return res.status(400).json({ error: 'Invalid orderId' });
+
+    const { code, content } = await createProductService({
+      name,
+      description,
+      imagePath: file?.filename,
+      price: Number(price),
+      ingredients: ingredients ? JSON.parse(ingredients) : [],
+      category,
+    });
+
+    if (code !== 201) deleteFailedRequestImage(String(file?.path));
+
+    return res.status(code).json(content);
+  } catch {
+    deleteFailedRequestImage(String(req.file?.path));
+    return res.status(400).json({ error: 'Syntax Error Ingredients' });
   }
-
-  const { name, description, price, ingredients, category } = body;
-
-  if (!isValidObjectId(category)) return res.status(400).json({ error: 'Invalid orderId' });
-
-  const { code, content } = await createProductService({
-    name,
-    description,
-    imagePath: file?.filename,
-    price: Number(price),
-    ingredients: ingredients ? JSON.parse(ingredients) : [],
-    category,
-  });
-
-  if (code !== 201) deleteFailedRequestImage(String(file?.path));
-
-  return res.status(code).json(content);
 }

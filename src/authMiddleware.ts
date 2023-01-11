@@ -16,7 +16,7 @@ export async function authMiddleware(
       String(process.env.SECRET)
     );
   } catch (err) {
-    return res.status(403).json({ error: 'JWT Required' });
+    return res.status(403).json({ error: 'JWT Error' });
   }
   return next();
 }
