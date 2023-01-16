@@ -40,7 +40,7 @@ export async function createProductController(req: Request, res: Response) {
     const { name, description, price, ingredients, category } = body;
 
     if (!isValidObjectId(category))
-      return res.status(400).json({ error: 'Invalid orderId' });
+      return res.status(400).json({ error: 'Invalid categoryId' });
 
     const { code, content } = await createProductService({
       name,

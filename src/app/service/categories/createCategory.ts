@@ -3,7 +3,7 @@ import { createCategoryModel, findCategoryModel, ICategoryProps } from '../../mo
 export async function createCategoryService({ name, icon }: ICategoryProps) {
   const existsCategory = await findCategoryModel({ name, icon });
 
-  if (existsCategory) return { content: { error: 'Category already exists' }, code: 400 };
+  if (existsCategory) return { content: { error: 'Category already exists' }, code: 409 };
 
   const newCategory = await createCategoryModel({ name, icon });
 

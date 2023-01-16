@@ -3,7 +3,7 @@ import { createProductModel, findProductModel, IProductProps } from '../../model
 export async function createProductService({ name, description, imagePath, price, ingredients, category }:IProductProps) {
   const existsProduct = await findProductModel({ name, description });
 
-  if (existsProduct) return { content: { error: 'Product already exists' }, code: 400 };
+  if (existsProduct) return { content: { error: 'Product already exists' }, code: 409 };
 
   const newProduct = await createProductModel({ name, description, imagePath, price, ingredients, category });
 
