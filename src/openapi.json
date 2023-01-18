@@ -1,0 +1,822 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Food API",
+    "version": "1.0.0",
+    "description": "Essa API foi construida para a criação de um APP de gerenciamento de pedidos para restaurantes",
+    "contact": {
+      "email": "cassyel1967@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3002/",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Efetuar Login",
+        "description": "Essa rota será responsável por efetuar o login do usuário e retornar um JWT para validar o acesso ao banco de dados da API, permitindo assim realizar alterações",
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "username_example"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "email@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password_example"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcm5hbWVfZXhhbXBsZSIsImVtYWlsIjoiZW1haWxAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6InBhc3N3b3JkX2V4YW1wbGUifQ.5BS9n0gWCH2fGWn7rDbTVyHevPUKQ-1oGKwrdeBG9JY"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Login Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "summary": "Criar Produtos",
+        "description": "Essa rota será responsável por criar um novo produto",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Pizza quatro queijos"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Deliciosa pizza quatro queijos com borda simples"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "nullable": false
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 40
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "63b0312e1a1999e1bde95df2"
+                  },
+                  "ingredients": {
+                    "type": "array",
+                    "description": "one array of object with name and icon properties",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "icon": {
+                          "type": "string",
+                          "description": "Envie um emoji como icone"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Pizza quatro queijos"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Deliciosa pizza quatro queijos com borda simples"
+                    },
+                    "image": {
+                      "type": "string",
+                      "format": "binary",
+                      "nullable": false
+                    },
+                    "price": {
+                      "type": "number",
+                      "example": 40
+                    },
+                    "category": {
+                      "type": "string",
+                      "example": "63b0312e1a1999e1bde95df2"
+                    },
+                    "ingredients": {
+                      "type": "array",
+                      "description": "one array of object with name and icon properties",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "icon": {
+                            "type": "string",
+                            "description": "Envie um emoji como icone"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error Product already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Product already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar Todos Os Produtos",
+        "description": "Essa rota será responsável por listar todos os produtos",
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "imagePath": {
+                        "type": "string"
+                      },
+                      "price": {
+                        "type": "number"
+                      },
+                      "ingredients": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "icon": {
+                              "type": "string"
+                            },
+                            "_id": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "category": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No products registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No products registered"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{id}/products": {
+      "get": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "summary": "Listar Produtos Pela Categoria",
+        "description": "Essa rota será responsável por listar os produtos pelo ID da sua categoria",
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "imagePath": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "ingredients": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "icon": {
+                            "type": "string"
+                          },
+                          "_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "category": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No products registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Not find products with categoryId {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remover Produtos",
+        "description": "Essa rota será responsável por remover os produtos pelo seu ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "imagePath": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "ingredients": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "icon": {
+                            "type": "string"
+                          },
+                          "_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "category": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No products registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Not find products with this {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories": {
+      "post": {
+        "summary": "Criar categorias",
+        "description": "Essa rota será responsável por criar categorias de produtos",
+        "tags": [
+          "Categories"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "icon": {
+                    "type": "string",
+                    "description": "Envie um emoji como icone"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "icon": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error Category already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Category already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar Todas As Categorias",
+        "description": "Essa rota será responsável por listar todas as categorias",
+        "tags": [
+          "Categories"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "icon": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No products registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No categories registered"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "summary": "Criar Pedidos",
+        "description": "Essa rota será responsável por criar pedidos",
+        "tags": [
+          "Orders"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json:": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "table": {
+                    "type": "string"
+                  },
+                  "products": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "product": {
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "table": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "product": {
+                            "type": "string"
+                          },
+                          "quantity": {
+                            "type": "number"
+                          },
+                          "_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "_id": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Error Order Already Exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "username_example"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password_example"
+          }
+        }
+      },
+      "CreateProduct": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Pizza quatro queijos"
+          },
+          "description": {
+            "type": "string",
+            "example": "Deliciosa pizza quatro queijos com borda simples"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "nullable": false
+          },
+          "price": {
+            "type": "number",
+            "example": 40
+          },
+          "category": {
+            "type": "string",
+            "example": "63b0312e1a1999e1bde95df2"
+          },
+          "ingredients": {
+            "type": "array",
+            "description": "one array of object with name and icon properties",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "icon": {
+                  "type": "string",
+                  "description": "Envie um emoji como icone"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProductsIngredient": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Envie um emoji como icone"
+          }
+        }
+      },
+      "CreateCategory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Envie um emoji como icone"
+          }
+        }
+      },
+      "CreateOrder": {
+        "type": "object",
+        "properties": {
+          "table": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

@@ -8,5 +8,5 @@ export async function deleteProductService({ id }: IDeleteProductProps) {
 
   return deletedProduct
     ? { content: deletedProduct, code: 200 }
-    : { content: { error: `Not find order with this id: ${id}` }, code: 400 };
+    : { content: { error: `Not find product with this id: ${id}` }, code: 404 };
 }

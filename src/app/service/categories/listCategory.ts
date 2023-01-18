@@ -5,5 +5,5 @@ export async function listCategoriesService() {
 
   return allCategories.length !== 0
     ? { content: allCategories, code: 200 }
-    : { content: { error: 'No category registered' }, code: 400 };
+    : { content: { error: 'No categories registered' }, code: 404 };
 }

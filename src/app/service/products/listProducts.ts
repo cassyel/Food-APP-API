@@ -5,5 +5,5 @@ export async function listProductsService() {
 
   return allProducts.length !== 0
     ? { content: allProducts, code: 200 }
-    : { content: { error: 'No products registered' }, code: 400 };
+    : { content: { error: 'No products registered' }, code: 404 };
 }
