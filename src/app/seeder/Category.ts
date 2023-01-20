@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-import { MONGO_URL } from '../..';
 import { Category } from '../database/Category';
 
 export async function categoriesSeeder() {

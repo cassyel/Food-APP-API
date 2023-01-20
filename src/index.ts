@@ -12,15 +12,11 @@ import swagerDocs from './openapi.json';
 
 dotenv.config();
 
-export const MONGO_URL = `mongodb://${process.env.MONGOUSER}:${process.env.MONGOPASSWORD}@${process.env.MONGOHOST}:${process.env.MONGOPORT}`;
-
-console.log(MONGO_URL);
-
 mongoose
-  .connect(String(MONGO_URL), { dbName: 'Waiter-APP' })
+  .connect(String(process.env.MONGOATLAS), { dbName: 'Waiter-APP' })
   .then(() => {
     const app = express();
-    const port = 3002;
+    const port = 3001;
 
 
     app.listen(port, () => {
