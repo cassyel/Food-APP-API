@@ -21,7 +21,7 @@ export async function createOrderService({ table, products }: ICreateOrderProps)
     );
 
     if (existingOrders.length > 0)
-      return { content: 'Order already exists', code: 409 };
+      return { content: { error: 'Order already exists' }, code: 409 };
   }
 
   const newOrder = await createOrderModel({ table, products });

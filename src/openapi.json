@@ -591,7 +591,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json:": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -688,6 +688,367 @@
                   "properties": {
                     "error": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar Todos Os Pedidos",
+        "description": "Essa rota será responsável por listar todos os pedidos",
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "table": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "products": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "product": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "imagePath": {
+                                  "type": "string"
+                                },
+                                "price": {
+                                  "type": "number"
+                                },
+                                "ingredients": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "icon": {
+                                        "type": "string"
+                                      },
+                                      "_id": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "category": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "quantity": {
+                              "type": "number"
+                            },
+                            "_id": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No products registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No orders registered"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remover Pedidos",
+        "description": "Essa rota será responsável por remover os pedidos pelo seu ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Order ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "table": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "product": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "imagePath": {
+                                "type": "string"
+                              },
+                              "price": {
+                                "type": "number"
+                              },
+                              "ingredients": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "icon": {
+                                      "type": "string"
+                                    },
+                                    "_id": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "category": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "quantity": {
+                            "type": "number"
+                          },
+                          "_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No orders registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Not find order with this {id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Editar Status Do Pedido",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Essa rota será responsável por Editar o status do pedido",
+        "tags": [
+          "Orders"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Order ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "IN_PRODUCTION"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "table": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "product": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "imagePath": {
+                                "type": "string"
+                              },
+                              "price": {
+                                "type": "number"
+                              },
+                              "ingredients": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "icon": {
+                                      "type": "string"
+                                    },
+                                    "_id": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              },
+                              "category": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "quantity": {
+                            "type": "number"
+                          },
+                          "_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No order registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Not find order with this {id}"
                     }
                   }
                 }
