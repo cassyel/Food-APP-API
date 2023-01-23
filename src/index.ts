@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 
 import swaggerUi from 'swagger-ui-express';
-import path from 'node:path';
+import path from 'path';
 import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
