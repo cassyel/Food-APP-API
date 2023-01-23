@@ -10,8 +10,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3002/",
+      "url": "http://localhost:3001/",
       "description": "Production"
+    },
+    {
+      "url": "http://localhost:3002/",
+      "description": "Documentation"
     }
   ],
   "paths": {
@@ -19,18 +23,12 @@
       "post": {
         "summary": "Efetuar Login",
         "description": "Essa rota será responsável por efetuar o login do usuário e retornar um JWT para validar o acesso ao banco de dados da API, permitindo assim realizar alterações",
-        "tags": [
-          "Login"
-        ],
+        "tags": ["Login"],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ],
+                "required": ["name", "email", "password"],
                 "type": "object",
                 "properties": {
                   "name": {
@@ -138,9 +136,7 @@
             }
           }
         },
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "security": [
           {
             "bearerAuth": []
@@ -217,9 +213,7 @@
       "get": {
         "summary": "Listar Todos Os Produtos",
         "description": "Essa rota será responsável por listar todos os produtos",
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "responses": {
           "200": {
             "description": "Sucess",
@@ -305,9 +299,7 @@
         ],
         "summary": "Listar Produtos Pela Categoria",
         "description": "Essa rota será responsável por listar os produtos pelo ID da sua categoria",
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "responses": {
           "200": {
             "description": "Sucess",
@@ -395,9 +387,7 @@
             }
           }
         ],
-        "tags": [
-          "Products"
-        ],
+        "tags": ["Products"],
         "responses": {
           "200": {
             "description": "Sucess",
@@ -469,9 +459,7 @@
       "post": {
         "summary": "Criar categorias",
         "description": "Essa rota será responsável por criar categorias de produtos",
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -535,9 +523,7 @@
       "get": {
         "summary": "Listar Todas As Categorias",
         "description": "Essa rota será responsável por listar todas as categorias",
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "responses": {
           "200": {
             "description": "Sucess",
@@ -586,9 +572,7 @@
       "post": {
         "summary": "Criar Pedidos",
         "description": "Essa rota será responsável por criar pedidos",
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -699,9 +683,7 @@
       "get": {
         "summary": "Listar Todos Os Pedidos",
         "description": "Essa rota será responsável por listar todos os pedidos",
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "responses": {
           "200": {
             "description": "Sucess",
@@ -823,9 +805,7 @@
             }
           }
         ],
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "responses": {
           "200": {
             "description": "Sucess",
@@ -931,9 +911,7 @@
           }
         ],
         "description": "Essa rota será responsável por Editar o status do pedido",
-        "tags": [
-          "Orders"
-        ],
+        "tags": ["Orders"],
         "parameters": [
           {
             "name": "id",
@@ -1062,11 +1040,7 @@
   "components": {
     "schemas": {
       "Login": {
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
+        "required": ["name", "email", "password"],
         "type": "object",
         "properties": {
           "name": {

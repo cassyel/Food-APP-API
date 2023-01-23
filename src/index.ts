@@ -13,7 +13,7 @@ import swagerDocs from './openapi.json';
 dotenv.config();
 
 mongoose
-  .connect(String(process.env.MONGOATLAS), { dbName: 'Waiter-APP' })
+  .connect(String(process.env.MONGOATLAS), { dbName: 'Food-APP' })
   .then(() => {
     const app = express();
     const port = 3001;
@@ -26,7 +26,7 @@ mongoose
     app.use(express.json());
     app.use(router);
     app.use('/uploads/images', express.static(path.resolve(__dirname, '..', 'uploads')));
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swagerDocs));
+    app.use('/', swaggerUi.serve, swaggerUi.setup(swagerDocs));
     app.use(serverError);
     categoriesSeeder();
   })
