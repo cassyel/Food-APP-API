@@ -14,7 +14,7 @@
       "description": "Production"
     },
     {
-      "url": "http://localhost:3002/",
+      "url": "https://food-app-docs.onrender.com/",
       "description": "Documentation"
     }
   ],
