@@ -1,13 +1,10 @@
 import * as dotenv from 'dotenv';
-
-import swaggerUi from 'swagger-ui-express';
 import * as path from 'path';
+import swaggerUi from 'swagger-ui-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
 import { serverError } from './errorHandling';
-import { categoriesSeeder } from './app/seeder/Category';
-
 import swagerDocs from './openapi.json';
 import cors from 'cors';
 
@@ -21,7 +18,7 @@ mongoose
 
 
     app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
+      console.log(`Server is running on port: ${port}`);
     });
 
     app.use(express.json());
@@ -30,6 +27,5 @@ mongoose
     app.use('/uploads/images', express.static(path.resolve(__dirname, '..', 'uploads')));
     app.use('/', swaggerUi.serve, swaggerUi.setup(swagerDocs));
     app.use(serverError);
-    categoriesSeeder();
   })
   .catch(() => console.log('Error to connect on mongoDB'));
