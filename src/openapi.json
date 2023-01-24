@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3001/",
+      "url": "https://food-app-6n6r.onrender.com/",
       "description": "Production"
     },
     {

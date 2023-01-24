@@ -9,6 +9,7 @@ import { serverError } from './errorHandling';
 import { categoriesSeeder } from './app/seeder/Category';
 
 import swagerDocs from './openapi.json';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ mongoose
     });
 
     app.use(express.json());
+    app.use(cors());
     app.use(router);
     app.use('/uploads/images', express.static(path.resolve(__dirname, '..', 'uploads')));
     app.use('/', swaggerUi.serve, swaggerUi.setup(swagerDocs));
