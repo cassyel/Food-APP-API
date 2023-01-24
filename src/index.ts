@@ -11,7 +11,7 @@ import cors from 'cors';
 dotenv.config();
 
 mongoose
-  .connect(String(process.env.MONGOATLAS), { dbName: 'Food-APP' })
+  .connect(String(process.env.MONGOATLAS), { dbName: String(process.env.DATABASENAME) })
   .then(() => {
     const app = express();
     const port = process.env.PORT || 3001;
