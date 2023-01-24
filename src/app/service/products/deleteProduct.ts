@@ -1,6 +1,6 @@
 import { deleteProductModel, IDeleteProductProps  } from '../../models/products/deleteProduct';
 import { deleteFailedRequestImage } from '../../controller/products/createProduct';
-import path from 'path';
+import * as path from 'path';
 
 export async function deleteProductService({ id }: IDeleteProductProps) {
   const deletedProduct = await deleteProductModel({ id });
