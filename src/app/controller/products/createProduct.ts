@@ -32,10 +32,13 @@ export async function createProductController(req: Request, res: Response) {
     const { file, body } = req;
     const { error: JoiInputFieldsError } = schema.validate(body, options);
 
+    if (!file) return res.status(400).json({ error: 'Image is required' });
+
     if (JoiInputFieldsError) {
       deleteFailedRequestImage(String(file?.path));
       return res.status(400).json({ error: JoiInputFieldsError.message });
     }
+
 
     const { name, description, price, ingredients, category } = body;
 
