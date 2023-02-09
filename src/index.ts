@@ -11,7 +11,7 @@ import cors from 'cors';
 dotenv.config();
 
 mongoose
-  .connect(String(process.env.MONGOATLAS), { dbName: String(process.env.DATABASENAME) })
+  .connect(String(process.env.MONGOATLASDOC), { dbName: String(process.env.DATABASENAMEDOC) })
   .then(() => {
     const app = express();
     const port = process.env.PORT || 3001;
@@ -25,7 +25,6 @@ mongoose
     app.use(cors());
     app.use(router);
     app.use('/uploads/images', express.static(path.resolve(__dirname, '..', 'uploads')));
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swagerDocs));
     app.use(serverError);
   })
   .catch(() => console.log('Error to connect on mongoDB'));
