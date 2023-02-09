@@ -41,13 +41,22 @@ export async function createProductController(req: Request, res: Response) {
     }
 
 
-    const { name, description, price, ingredients, category } = body;
+    const { name, description, price, category } = body;
+    let { ingredients } = body;
 
-    console.log(body);
+
+    if (!isValidObjectId(category)) return res.status(400).json({ error: 'Invalid categoryId' });
+
+    const swaggerURLs = ['food-app-docs.onrender.com', 'food-app-6n6r.onrender.com'];
+    const containsURL = swaggerURLs.some((URL) => URL === req.rawHeaders[1] );
+
+    if (containsURL) {
+      ingredients = `[${ingredients}]`;
+    }
+
+    console.log(ingredients);
 
 
-    if (!isValidObjectId(category))
-      return res.status(400).json({ error: 'Invalid categoryId' });
 
     const { code, content } = await createProductService({
       name,
