@@ -56,8 +56,6 @@ export async function createProductController(req: Request, res: Response) {
 
     console.log(ingredients);
 
-
-
     const { code, content } = await createProductService({
       name,
       description,
