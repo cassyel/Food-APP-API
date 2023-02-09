@@ -46,11 +46,9 @@ export async function createProductController(req: Request, res: Response) {
 
 
     if (!isValidObjectId(category)) return res.status(400).json({ error: 'Invalid categoryId' });
+    const splittedIngredients = ingredients.split('');
 
-    const swaggerURLs = ['food-app-docs.onrender.com', 'food-app-6n6r.onrender.com'];
-    const containsURL = swaggerURLs.some((URL) => URL === req.rawHeaders[1] );
-
-    if (containsURL) {
+    if (splittedIngredients[0] !== '[' && splittedIngredients[splittedIngredients.length -1] !== ']') {
       ingredients = `[${ingredients}]`;
     }
 
