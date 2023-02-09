@@ -1,11 +1,9 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import swaggerUi from 'swagger-ui-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import { router } from './router';
 import { serverError } from './errorHandling';
-import swagerDocs from './openapi.json';
 import cors from 'cors';
 
 dotenv.config();
