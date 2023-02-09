@@ -43,7 +43,7 @@ export async function createProductController(req: Request, res: Response) {
 
     const { name, description, price, ingredients, category } = body;
 
-    console.log(ingredients);
+    console.log(body);
 
 
     if (!isValidObjectId(category))
