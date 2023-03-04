@@ -1,7 +1,4 @@
-import * as path from 'path';
-
 import { Router } from 'express';
-import multer from 'multer';
 
 import { createCategoryController } from './app/controller/categories/createCategory';
 import { listCategoriesController } from './app/controller/categories/listCategory';
@@ -15,19 +12,9 @@ import { deleteOrderController } from './app/controller/orders/deleteOrder';
 import { deleteProductController } from './app/controller/products/deleteProduct';
 import { loginController } from './app/controller/user/login';
 import { authMiddleware } from './authMiddleware';
+import { upload } from './AWS-S3';
 
 export const router = Router();
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(_req, _file, callback) {
-      callback(null, path.resolve(__dirname, '..', 'uploads'));
-    },
-    filename(_req, file, callback) {
-      callback(null, `${Date.now()}-${file.originalname}`);
-    },
-  }),
-});
 
 // List Categories
 router.get('/categories', listCategoriesController);

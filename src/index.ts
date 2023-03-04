@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-import * as path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import express from 'express';
 import mongoose from 'mongoose';
@@ -7,6 +6,7 @@ import { router } from './router';
 import { serverError } from './errorHandling';
 import swagerDocs from './openapi.json';
 import cors from 'cors';
+import { productsImages } from './app/controller/products/productsImages';
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ mongoose
     app.use(express.json());
     app.use(cors());
     app.use(router);
-    app.use('/uploads/images', express.static(path.resolve(__dirname, '..', 'uploads')));
+    app.use('/uploads/images/:imagePath', productsImages);
     app.use('/', swaggerUi.serve, swaggerUi.setup(swagerDocs));
     app.use(serverError);
   })
