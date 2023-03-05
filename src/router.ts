@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { createCategoryController } from './app/controller/categories/createCategory';
-import { listCategoriesController } from './app/controller/categories/listCategory';
+import { listCategoriesController } from './app/controller/categories/listCategories';
 import { createProductController } from './app/controller/products/createProduct';
 import { listProductsController } from './app/controller/products/listProducts';
 import { listProductsByCategoryController } from './app/controller/products/listProductsByCategory';

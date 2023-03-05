@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { listCategoriesService } from '../../service/categories/listCategory';
+import { listCategoriesService } from '../../service/categories/listCategories';
 
 export async function listCategoriesController(req: Request, res: Response) {
   const { code, content } = await listCategoriesService();
