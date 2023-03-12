@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongoose';
 import { Product } from '../../database/Product';
 
-type ingredients = {
+export type ingredients = {
   name: string;
   icon: string;
 }

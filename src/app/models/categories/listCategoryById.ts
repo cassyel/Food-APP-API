@@ -1,6 +1,7 @@
+import { ObjectId } from 'mongoose';
 import { Category } from '../../database/Category';
 
-export async function listCategoryByIdModel(id: string) {
-  const category = await Category.find().where('id').equals(id);
+export async function listCategoryByIdModel(id: ObjectId) {
+  const category = await Category.findById(id);
   return category;
 }

@@ -4,7 +4,7 @@ import { deleteImageFromS3 } from '../../../AWS-S3';
 export async function deleteProductService({ id }: IDeleteProductProps) {
   const deletedProduct = await deleteProductModel({ id });
 
-  if (deletedProduct) deleteImageFromS3({ Key: deletedProduct.imagePath });
+  if (deletedProduct) deleteImageFromS3({ key: deletedProduct.imagePath });
 
   return deletedProduct
     ? { content: deletedProduct, code: 200 }

@@ -6,7 +6,7 @@ import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 dotenv.config();
 
 type Key = {
-  Key: string;
+  key: string;
 }
 
 const s3 = new S3Client({
@@ -16,6 +16,7 @@ const s3 = new S3Client({
     secretAccessKey: String(process.env.AWS_SECRET_ACCESS_KEY),
   }
 });
+
 
 export const upload = multer({
   storage: multerS3({
@@ -27,10 +28,19 @@ export const upload = multer({
     contentType: function(req, file, cb) {
       cb(null, file.mimetype);
     }
-  })
+  }),
+  fileFilter: (req, file, cb) => {
+    const whitelist = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/svg+xml'];
+
+    if (whitelist.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Image file must be an: "image/png", "image/jpeg", "image/jpg", "image/webp", "image/svg+xml" '));
+    }
+  },
 });
 
-export const deleteImageFromS3 = async ({ Key }: Key) => {
+export const deleteImageFromS3 = async ({ key: Key }: Key) => {
   await s3.send(new DeleteObjectCommand({ Bucket: 'food-app-api-production', Key }));
   console.log(`Deleted ${Key} from AWS S3`);
 

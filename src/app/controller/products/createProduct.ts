@@ -1,19 +1,36 @@
+import { ingredients } from './../../models/products/createProduct';
 import { Request, Response } from 'express';
-import Joi, { ValidationOptions } from 'joi';
+import Joi from 'joi';
 import { createProductService } from '../../service/products/createProduct';
-import { isValidObjectId } from 'mongoose';
 import { deleteImageFromS3 } from '../../../AWS-S3';
+import { listCategoryByIdService } from '../../service/categories/listCategoryById';
+import { ObjectId } from 'mongoose';
 
 const schema = Joi.object({
   name: Joi.string().min(3).required(),
   description: Joi.string().min(10).required(),
-  image: Joi.any().optional(),
+  image: Joi.any().required(),
   price: Joi.number().min(1).required(),
   ingredients: Joi.string().optional(),
-  category: Joi.string().required(),
+  category: Joi.string().hex().length(24).required().messages({ 'string.length': 'Invalid objectID' }),
 });
 
-const options: ValidationOptions = {
+interface File extends Express.Multer.File {
+  file: {
+    key: string;
+  }
+}
+
+interface ICreateProduct {
+  name: string;
+  description: string;
+  image: Express.Multer.File | undefined;
+  price: number;
+  ingredients: ingredients[]  | [];
+  category: ObjectId;
+}
+
+const optionsJoi = {
   errors: {
     wrap: {
       label: '',
@@ -21,61 +38,53 @@ const options: ValidationOptions = {
   },
 };
 
-interface File extends Express.Multer.File {
-  file: {
-    key: string;
-    bucket: string;
-    location: string;
+async function validJoi({ category, description, image, ingredients, name, price }: ICreateProduct) {
+  try {
+    await schema.validateAsync({ category, description, image, ingredients, name, price }, optionsJoi);
+  } catch(error) {
+    if (error instanceof Joi.ValidationError) {
+      throw new Error(error.details[0].message);
+    }
   }
+
+  return null;
 }
 
-export async function createProductController(req: Request, res: Response) {
-  try {
-    const { body } = req;
-    const { file, file: { key: Key } } = req as unknown as File;
-    const { error: JoiInputFieldsError } = schema.validate(body, options);
-
-
-    if (!file) return res.status(400).json({ error: 'Image is required' });
-
-    console.log(req.file);
-
-
-    if (JoiInputFieldsError) {
-      deleteImageFromS3({ Key });
-      return res.status(400).json({ error: JoiInputFieldsError.message });
-    }
-
-
-    const { name, description, price, category } = body;
-    let { ingredients } = body;
-
-
-    if (!isValidObjectId(category)) return res.status(400).json({ error: 'Invalid categoryId' });
-    const splittedIngredients = ingredients.split('');
-
-    if (splittedIngredients[0] !== '[' && splittedIngredients[splittedIngredients.length -1] !== ']') {
-      ingredients = `[${ingredients}]`;
-    }
-
-    console.log(ingredients);
-
-    const { code, content } = await createProductService({
-      name,
-      description,
-      imagePath: file.key,
-      price: Number(price),
-      ingredients: ingredients ? JSON.parse(ingredients) : [],
-      category,
-    });
-
-    if (code !== 201) deleteImageFromS3({ Key });
-
-    return res.status(code).json(content);
-  } catch {
-    const { file: { key: Key } } = req as unknown as File;
-
-    deleteImageFromS3({ Key });
-    return res.status(400).json({ error: 'Syntax Error Ingredients' });
+async function validCategory({ category, key }: { category: ObjectId, key: string }) {
+  const categoryExists = await listCategoryByIdService(category);
+  if (!categoryExists) {
+    deleteImageFromS3({ key });
+    throw new Error('Please Check categoryIds On Get Request In /categories');
   }
+
+  return null;
+}
+
+
+export async function createProductController(req: Request, res: Response) {
+  const { category, description, name, price } = req.body as ICreateProduct;
+  const { file: { key } } = req as unknown as File;
+  const { file: image } = req;
+  let { ingredients } = req.body;
+
+  await validJoi({ category, description, image, ingredients, name, price });
+  await validCategory({ category, key });
+
+  const splittedIngredients = ingredients.split('');
+
+  if (splittedIngredients[0] !== '[' && splittedIngredients[splittedIngredients.length -1] !== ']') {
+    ingredients = `[${ingredients}]`;
+  }
+
+  const { code, content } = await createProductService({
+    name,
+    description,
+    imagePath: key,
+    price: Number(price),
+    ingredients: ingredients ? JSON.parse(ingredients) : [],
+    category,
+  });
+
+  if (code !== 201)  deleteImageFromS3({ key });
+  return res.status(code).json(content);
 }
