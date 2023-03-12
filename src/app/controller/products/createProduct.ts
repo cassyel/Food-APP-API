@@ -63,11 +63,12 @@ async function validCategory({ category, key }: { category: ObjectId, key: strin
 
 export async function createProductController(req: Request, res: Response) {
   const { category, description, name, price } = req.body as ICreateProduct;
-  const { file: { key } } = req as unknown as File;
   const { file: image } = req;
   let { ingredients } = req.body;
 
   await validJoi({ category, description, image, ingredients, name, price });
+
+  const { file: { key } } = req as unknown as File;
   await validCategory({ category, key });
 
   const splittedIngredients = ingredients.split('');
