@@ -11,7 +11,7 @@ const schema = Joi.object({
   description: Joi.string().min(10).required(),
   image: Joi.any().required(),
   price: Joi.number().min(1).required(),
-  ingredients: Joi.string().optional(),
+  ingredients: Joi.string().empty().required(),
   category: Joi.string().hex().length(24).required().messages({ 'string.length': 'Invalid objectID' }),
 });
 
@@ -60,29 +60,40 @@ async function validCategory({ category, key }: { category: ObjectId, key: strin
   return null;
 }
 
+function formatIngredient({ ingredients }: { ingredients: ingredients[] | []}) {
+  if (!ingredients) return [];
+
+  const splittedIngredients = String(ingredients).split('');
+  let stringIngredients;
+
+  if (splittedIngredients[0] !== '[' && splittedIngredients[splittedIngredients.length -1] !== ']') {
+    stringIngredients = `[${ingredients}]`;
+  }
+
+  if (stringIngredients !== undefined) return JSON.parse(stringIngredients);
+
+  return ingredients;
+}
+
 
 export async function createProductController(req: Request, res: Response) {
   const { category, description, name, price } = req.body as ICreateProduct;
   const { file: image } = req;
-  let { ingredients } = req.body;
+  const { ingredients: unformattedIngredients } = req.body;
 
-  await validJoi({ category, description, image, ingredients, name, price });
+  await validJoi({ category, description, image, ingredients: unformattedIngredients, name, price });
 
   const { file: { key } } = req as unknown as File;
   await validCategory({ category, key });
 
-  const splittedIngredients = ingredients.split('');
-
-  if (splittedIngredients[0] !== '[' && splittedIngredients[splittedIngredients.length -1] !== ']') {
-    ingredients = `[${ingredients}]`;
-  }
+  const ingredients = formatIngredient(unformattedIngredients);
 
   const { code, content } = await createProductService({
     name,
     description,
     imagePath: key,
     price: Number(price),
-    ingredients: ingredients ? JSON.parse(ingredients) : [],
+    ingredients,
     category,
   });
 
