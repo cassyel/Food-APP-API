@@ -60,40 +60,29 @@ async function validCategory({ category, key }: { category: ObjectId, key: strin
   return null;
 }
 
-function formatIngredient({ ingredients }: { ingredients: ingredients[] | []}) {
-  if (!ingredients) return [];
-
-  const splittedIngredients = String(ingredients).split('');
-  let stringIngredients;
-
-  if (splittedIngredients[0] !== '[' && splittedIngredients[splittedIngredients.length -1] !== ']') {
-    stringIngredients = `[${ingredients}]`;
-  }
-
-  if (stringIngredients !== undefined) return JSON.parse(stringIngredients);
-
-  return ingredients;
-}
-
 
 export async function createProductController(req: Request, res: Response) {
   const { category, description, name, price } = req.body as ICreateProduct;
   const { file: image } = req;
-  const { ingredients: unformattedIngredients } = req.body;
+  let { ingredients: unformattedIngredients } = req.body;
 
   await validJoi({ category, description, image, ingredients: unformattedIngredients, name, price });
 
   const { file: { key } } = req as unknown as File;
   await validCategory({ category, key });
 
-  const ingredients = formatIngredient(unformattedIngredients);
+  const splittedIngredients = unformattedIngredients.split('');
+
+  if (splittedIngredients[0] !== '[' && splittedIngredients[splittedIngredients.length -1] !== ']') {
+    unformattedIngredients = `[${unformattedIngredients}]`;
+  }
 
   const { code, content } = await createProductService({
     name,
     description,
     imagePath: key,
     price: Number(price),
-    ingredients,
+    ingredients: unformattedIngredients ? JSON.parse(unformattedIngredients) : [],
     category,
   });
 
