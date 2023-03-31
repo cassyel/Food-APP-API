@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Joi, { ValidationOptions } from 'joi';
+import { io } from '../../..';
 import { createOrderService } from '../../service/orders/createOrder';
 
 const schema = Joi.object({
@@ -26,6 +27,8 @@ export async function createOrderController(req: Request, res: Response) {
 
   const { table, products } = req.body;
   const { code, content } = await createOrderService({ table, products });
+
+  if (code === 201) io.emit('orders@new', content);
 
   return res.status(code).json(content);
 }

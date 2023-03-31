@@ -24,7 +24,8 @@ export async function createOrderService({ table, products }: ICreateOrderProps)
       return { content: { error: 'Order already exists' }, code: 409 };
   }
 
-  const newOrder = await createOrderModel({ table, products });
+  const newOrder = await (await createOrderModel({ table, products }))
+    .populate('products.product');
 
   return newOrder
     ? { content: newOrder, code: 201 }
