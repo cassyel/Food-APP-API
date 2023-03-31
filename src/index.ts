@@ -9,12 +9,12 @@ import swagerDocs from './openapi.json';
 import cors from 'cors';
 import { productsImages } from './app/controller/products/productsImages';
 
-import htpp from 'node:http';
 import { Server } from 'socket.io';
+import * as http from 'http';
 
 const app = express();
 
-const server = htpp.createServer(app);
+const server = http.createServer(app);
 export const io = new Server(server);
 
 
