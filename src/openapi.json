@@ -264,22 +264,6 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "No products registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No products registered"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -342,22 +326,6 @@
                     },
                     "category": {
                       "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No products registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Not find products with categoryId {id}"
                     }
                   }
                 }
@@ -430,22 +398,6 @@
                     },
                     "category": {
                       "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No products registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Not find products with this {id}"
                     }
                   }
                 }
@@ -543,22 +495,6 @@
                       "icon": {
                         "type": "string"
                       }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No products registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No categories registered"
                     }
                   }
                 }
@@ -765,22 +701,6 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "No products registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "No orders registered"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -879,22 +799,6 @@
                     },
                     "createdAt": {
                       "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No orders registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Not find order with this {id}"
                     }
                   }
                 }
@@ -1011,22 +915,6 @@
                     },
                     "createdAt": {
                       "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "No order registered",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Not find order with this {id}"
                     }
                   }
                 }
