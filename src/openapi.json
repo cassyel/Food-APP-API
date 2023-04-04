@@ -22,7 +22,7 @@
     "/login": {
       "post": {
         "summary": "Efetuar Login",
-        "description": "Essa rota será responsável por efetuar o login do usuário e retornar um JWT para validar o acesso ao banco de dados da API, permitindo assim realizar alterações",
+        "description": "Essa rota será responsável por efetuar o login do usuário e retornar um JWT para validar o acesso ao banco de dados da API, permitindo assim realizar alterações <br><br> OBS: Usar valor padrão para testar o servidor de documentação",
         "tags": ["Login"],
         "requestBody": {
           "content": {
@@ -33,15 +33,15 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "example": "username_example"
+                    "example": "Docs"
                   },
                   "email": {
                     "type": "string",
-                    "example": "email@example.com"
+                    "example": "documentation@swagger.com"
                   },
                   "password": {
                     "type": "string",
-                    "example": "password_example"
+                    "example": "docspassword"
                   }
                 }
               }
