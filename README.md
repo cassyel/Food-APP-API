@@ -58,9 +58,10 @@ Realizar uma requisição para o endpoint de login passando os seguintes dados n
 * Multer
 * ESLint
 * Express
-* Socket.io
-* Multer-S3
 * Mongoose
+* Multer-S3
+* Socket.io
+* Styled-Components
 
 <br>
 
