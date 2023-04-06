@@ -1,6 +1,6 @@
 # Food-APP-API
 
-Está API foi desenvolvida como parte de um projeto full-stack web e mobile (Food-APP LINK PARA O POST NO LINKEDIN), cujo objetivo é ser um serviço para gerenciamento de pedidos para restaurantes.
+Esta API foi desenvolvida como parte de um projeto full-stack web e mobile (Food-APP LINK PARA O POST NO LINKEDIN), cujo objetivo é ser um serviço para gerenciamento de pedidos para restaurantes.
 
 Em especifico trata-se de uma API de gerenciamento de pedidos e cardápio de um restaurante, com um total de 11 endpoints.
 
