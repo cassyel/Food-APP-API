@@ -8,7 +8,7 @@ Em especifico trata-se de uma API de gerenciamento de pedidos e cardápio de um 
 
 # Documentação da API
 
-A documentação da API foi desenvolvida utilizando Swagger (OAS3), e pode ser consultada em: <a href="https://food-app-6n6r.onrender.com/">API Docs</a>.
+A documentação da API foi desenvolvida utilizando Swagger (OAS3), e pode ser consultada em: <a href="https://food-app-api-production.onrender.com">API Docs</a>.
 
 <br>
 
