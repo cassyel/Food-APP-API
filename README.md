@@ -44,11 +44,11 @@ Realizar uma requisição para o endpoint de login passando os seguintes dados n
 # Tecnologias utilizadas
 
 > ##  Stacks
-* Node.js
+* AWS-S3
 * Swagger
+* Node.js
 * MongoDB
 * TypeScript
-* Amazon S3
 
 <br>
 
@@ -61,11 +61,10 @@ Realizar uma requisição para o endpoint de login passando os seguintes dados n
 * Mongoose
 * Multer-S3
 * Socket.io
-* Styled-Components
 
 <br>
 
 > ## Services
+* AWS-S3
 * Render
-* Amazon S3
 * MongoDB Atlas
