@@ -1,6 +1,6 @@
 # Food-APP-API
 
-Está API foi desenvolvida como parte de um projeto full-stack web e mobile (Food-APP LINK PARA O POST NO LINKEDIN), cujo objetivo é ser um serviço para gerenciamento de pedidos para restaurantes.
+Esta API foi desenvolvida como parte de um projeto full-stack web e mobile (Food-APP LINK PARA O POST NO LINKEDIN), cujo objetivo é ser um serviço para gerenciamento de pedidos para restaurantes.
 
 Em especifico trata-se de uma API de gerenciamento de pedidos e cardápio de um restaurante, com um total de 11 endpoints.
 
@@ -8,7 +8,7 @@ Em especifico trata-se de uma API de gerenciamento de pedidos e cardápio de um 
 
 # Documentação da API
 
-A documentação da API foi desenvolvida utilizando Swagger (OAS3), e pode ser consultada em: <a href="https://food-app-6n6r.onrender.com/">API Docs</a>.
+A documentação da API foi desenvolvida utilizando Swagger (OAS3), e pode ser consultada em: <a target="_blank" href="https://food-app-api-production.onrender.com">API Docs</a>.
 
 <br>
 
@@ -44,11 +44,11 @@ Realizar uma requisição para o endpoint de login passando os seguintes dados n
 # Tecnologias utilizadas
 
 > ##  Stacks
-* Node.js
+* AWS-S3
 * Swagger
+* Node.js
 * MongoDB
 * TypeScript
-* Amazon S3
 
 <br>
 
@@ -58,13 +58,13 @@ Realizar uma requisição para o endpoint de login passando os seguintes dados n
 * Multer
 * ESLint
 * Express
-* Socket.io
-* Multer-S3
 * Mongoose
+* Multer-S3
+* Socket.io
 
 <br>
 
 > ## Services
+* AWS-S3
 * Render
-* Amazon S3
 * MongoDB Atlas
