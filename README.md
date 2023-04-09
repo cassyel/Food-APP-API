@@ -1,6 +1,6 @@
 # Food-APP-API
 
-Esta API foi desenvolvida como parte de um projeto full-stack web e mobile (Food-APP LINK PARA O POST NO LINKEDIN), cujo objetivo é ser um serviço para gerenciamento de pedidos para restaurantes.
+Esta API foi desenvolvida como parte de um projeto full-stack web e mobile (<a href="https://www.linkedin.com/posts/cassyel-oliveira_projeto-food-app-trata-se-de-um-produto-activity-7050656580878352384-SDe-?utm_source=share&utm_medium=member_desktop">Post FOOD-APP</a>), cujo objetivo é ser um serviço para gerenciamento de pedidos para restaurantes.
 
 Em especifico trata-se de uma API de gerenciamento de pedidos e cardápio de um restaurante, com um total de 11 endpoints.
 
