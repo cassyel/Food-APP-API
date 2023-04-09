@@ -10,11 +10,11 @@
   },
   "servers": [
     {
-      "url": "https://food-app-api-production.onrender.com",
+      "url": "https://food-app-api-production.up.railway.app",
       "description": "Production"
     },
     {
-      "url": "https://food-app-api-documentation.onrender.com",
+      "url": "https://food-app-api-doc.up.railway.app",
       "description": "Documentation"
     }
   ],
